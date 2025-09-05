@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiranga Live Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00e676;
+            --secondary: #2979ff;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #e0e0e0;
+            --danger: #ff3d00;
+            --warning: #ffab00;
+            --success: #00c853;
+            --info: #00b0ff;
+            --premium: #ffcc00;
+            --register: #9c27b0;
+            --telegram: #0088cc;
+            --support: #6a11cb;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark);
+            margin: 0;
+            padding: 0;
+            color: var(--light);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo .pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 230, 118, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        .status-items {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        
+        .online { background-color: var(--success); }
+        .offline { background-color: var(--danger); }
+        .syncing { background-color: var(--warning); }
+        
+        .current-time {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            color: var(--secondary);
+        }
+
+        /* App Logo */
+        .app-logo {
+            max-width: 90px;
+            height: auto;
+            margin: 15px auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .app-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .panel {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+        }
+        
+        .panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--primary);
+            margin: 0;
+        }
+        
+        .panel-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: none;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: black;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .prediction-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .prediction-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .number-category {
+            font-size: 18px;
+            background-color: rgba(0, 230, 118, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .prediction-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .meta-label {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        
+        .meta-value {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .win { color: var(--success); }
+        .loss { color: var(--danger); }
+        
+        /* Action buttons section */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .action-button-container {
+            position: relative;
+        }
+        
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .register-btn {
+            background: linear-gradient(135deg, var(--register), #7b1fa2);
+            color: white;
+            box-shadow: 0 0 10px rgba(156, 39, 176, 0.7), 0 4px 10px rgba(156, 39, 176, 0.3);
+        }
+        
+        .register-btn:hover {
+            background: linear-gradient(135deg, #7b1fa2, var(--register));
+            box-shadow: 0 6px 15px rgba(156, 39, 176, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .telegram-btn {
+            background: linear-gradient(135deg, var(--telegram), #0064b7);
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 136, 204, 0.7), 0 4px 10px rgba(0, 136, 204, 0.3);
+        }
+        
+        .telegram-btn:hover {
+            background: linear-gradient(135deg, #0064b7, var(--telegram));
+            box-shadow: 0 6px 15px rgba(0, 136, 204, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .premium-btn {
+            background: linear-gradient(135deg, var(--premium), #ff9900);
+            color: black;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+            font-weight: bold;
+            animation: premiumPulse 2s infinite;
+        }
+        
+        @keyframes premiumPulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 6px 20px rgba(255, 204, 0, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4); }
+        }
+        
+        .premium-btn:hover {
+            background: linear-gradient(135deg, #ff9900, var(--premium));
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.6);
+            transform: translateY(-2px) scale(1.03);
+        }
+        
+        .support-btn {
+            background: linear-gradient(135deg, var(--support), #2575fc);
+            color: white;
+            box-shadow: 0 0 10px rgba(106, 17, 203, 0.7), 0 4px 10px rgba(106, 17, 203, 0.3);
+        }
+        
+        .support-btn:hover {
+            background: linear-gradient(135deg, #2575fc, var(--support));
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .warning-text {
+            text-align: center;
+            color: var(--danger);
+            font-size: 14px;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: rgba(255, 61, 0, 0.1);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 61, 0, 0.3);
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* Futuristic loading animation */
+        .futuristic-loading {
+            position: relative;
+            height: 4px;
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .futuristic-loading::after {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: futuristicLoading 1.5s infinite;
+        }
+        
+        @keyframes futuristicLoading {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+        
+        /* Period options */
+        .period-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .period-option {
+            padding: 8px 12px;
+            border-radius: 6px;
+            background-color: rgba(255,255,255,0.1);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .period-option.selected {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .period-option:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        /* Input and reveal button */
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            width: 100%;
+        }
+        
+        .period-input {
+            width: 100%;
+            max-width: 200px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background-color: rgba(0,0,0,0.3);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .period-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .reveal-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, var(--secondary), #1a67f2);
+            color: white;
+            font-weight: 500;
+            cursor: button;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .reveal-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .reveal-btn:not(:disabled):hover {
+            background: linear-gradient(135deg, #1a67f2, var(--secondary));
+            transform: translateY(-2px);
+        }
+        
+        .result-display {
+            margin: 0 0 15px 0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            min-height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            transition: all 0.5s;
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: resultReveal 0.5s ease;
+        }
+        
+        @keyframes resultReveal {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .result-red {
+            background-color: rgba(255, 61, 0, 0.2);
+            color: var(--danger);
+        }
+        
+        .result-green {
+            background-color: rgba(0, 200, 83, 0.2);
+            color: var(--success);
+        }
+        
+        .result-neutral {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+        
+        .next-prediction-label {
+            font-size: 12px;
+            color: var(--primary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        /* Button tags - Now positioned above buttons */
+        .button-tag {
+            position: absolute;
+            top: -12px;
+            right: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .register-tag {
+            background: linear-gradient(135deg, #ffeb3b, #ffc107);
+            color: #000;
+            animation: tagPulse 2s infinite;
+        }
+        
+        .telegram-tag {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+        }
+        
+        .premium-tag {
+            background: linear-gradient(135deg, #ff4081, #d81b60);
+            color: white;
+            animation: hotTagAnimation 1.5s infinite;
+        }
+        
+        .support-tag {
+            background: linear-gradient(135deg, #f44336, #c62828);
+            color: white;
+            animation: blink 1.5s infinite;
+        }
+        
+        @keyframes tagPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes hotTagAnimation {
+            0% { background: linear-gradient(135deg, #ff4081, #d81b60); }
+            50% { background: linear-gradient(135deg, #ff6b9d, #e91e63); }
+            100% { background: linear-gradient(135deg, #ff4081, #d81b60); }
+        }
+        
+        /* Mobile-specific adjustments */
+        @media (min-width: 768px) {
+            .container {
+                padding: 20px;
+                max-width: 600px;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .status-bar {
+                font-size: 14px;
+            }
+            
+            .current-time {
+                font-size: 14px;
+            }
+            
+            .panel-title {
+                font-size: 16px;
+            }
+            
+            .prediction-value {
+                font-size: 48px;
+            }
+            
+            .number-category {
+                font-size: 24px;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .warning-text {
+                font-size: 16px;
+            }
+            
+            .period-options {
+                gap: 15px;
+            }
+            
+            .period-option {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="pulse"></div>
+                    Tiranga Live Prediction
+                </div>
+            </div>
+            <div class="status-bar">
+                <div class="status-items">
+                    <div class="status-item">
+                        <div class="status-indicator online"></div>
+                        <span>Online</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator syncing"></div>
+                        <span>Syncing</span>
+                    </div>
+                </div>
+                <div class="current-time" id="currentTime">
+                    <!-- Time will be inserted by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- App Logo -->
+        <img src="logo5.png" alt="55Club Logo" class="app-logo">
+        
+        <div class="dashboard">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">MODE :</h3>
+                    <div class="panel-actions">
+                        <button class="btn btn-primary" id="refreshBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Period Options -->
+                <div class="period-options">
+                    <div class="period-option" data-period="30">WinGo 30s</div>
+                    <div class="period-option selected" data-period="60">WinGo 1m</div>
+                    <div class="period-option" data-period="180">WinGo 3m</div>
+                </div>
+                
+                <!-- Next Prediction Label -->
+                <div class="next-prediction-label">Next Prediction</div>
+                
+                <div class="prediction-display">
+                    <!-- Result Display - Now at the very top -->
+                    <div class="result-display result-neutral" id="resultDisplay" style="display: none;"></div>
+                    
+                    <div class="meta-label">ENTER PERIOD NUMBER</div>
+                    
+                    <!-- Input and Reveal Button -->
+                    <div class="input-section">
+                        <input type="number" class="period-input" id="periodInput" placeholder="Enter period number" min="1">
+                        <button class="reveal-btn" id="revealBtn">START</button>
+                    </div>
+                    
+                    <!-- Loading indicator -->
+                    <div class="futuristic-loading" id="loadingIndicator" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">SYSTEM INFORMATION</h3>
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <div class="status-item">
+                        <div class="status-indicator online"></div>
+                        <span>Prediction Engine: <strong>Manual Mode</strong></span>
+                    </div>
+                    <div class="status-item" style="margin-top: 8px;">
+                        <div class="status-indicator syncing"></div>
+                        <span>Data Sync: <strong>On-Demand</strong></span>
+                    </div>
+                    <div class="status-item" style="margin-top: 8px;">
+                        <div class="status-indicator online"></div>
+                        <span>Algorithm: <strong>Advanced Pattern Detection</strong></span>
+                    </div>
+                    
+                    <!-- Warning Text -->
+                    <div class="warning-text">
+For best results, please create a new account by clicking on the 'Register' button. Using this hack on your old account may not work properly.<br>
+अच्छे मुनाफ़े और परिणाम के लिए 'Register' बटन पर क्लिक करके नया अकाउंट बनाएं। पुराने अकाउंट में इस हैक का उपयोग करने पर यह सही से काम नहीं करेगा।"
+                        </div>
+                    
+                    <!-- Action Buttons Section -->
+                    <div class="action-buttons">
+                        <!-- Register Button -->
+                        <div class="action-button-container">
+                            <span class="button-tag register-tag">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                </svg>
+                                Bonus
+                            </span>
+                            <button class="action-button register-btn" onclick="openInBrowser('https://colorsignup.github.io/ES1/Tiranga')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                </svg>
+                                Register Now
+                            </button>
+                        </div>
+                        
+                        <!-- Telegram Button -->
+                        <div class="action-button-container">
+                            <span class="button-tag telegram-tag">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 8v8"></path>
+                                    <path d="M8 12h8"></path>
+                                </svg>
+                                Free
+                            </span>
+                            <button class="action-button telegram-btn" onclick="openInBrowser('https://t.me/EarningScripter1')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21.944 4.133a2.036 2.036 0 0 0-2.127-1.945c-1.225.087-4.458.367-7.817 1.545-3.359 1.178-6.692 2.903-7.77 3.5a2.036 2.036 0 0 0-.723 2.84l2.81 5.175 1.456 4.514a2.036 2.036 0 0 0 2.530 1.345l3.497-1.25 4.124 3.037a2.036 2.036 0 0 0 3.17-1.2c.458-1.733 1.550-6.433 2.157-9.02a2.036 2.036 0 0 0-1.367-2.34zm-3.05 3.317l-9.466 5.725a.678.678 0 0 0-.2.953c.100.15.270.236.450.236a.678.678 0 0 0 .350-.1l7.866-4.97a.678.678 0 0 1 .923.170.678.678 0 0 1-.170.923l-5.725 3.617a.678.678 0 0 0-.200.953.678.678 0 0 0 .953.200l7.866-4.97a2.036 2.036 0 0 0-2.437-3.287z"/>
+                                </svg>
+                                Join Telegram
+                            </button>
+                        </div>
+                        
+                        <!-- Try Paid Version Button -->
+                        
+                        
+                        <!-- Customer Support Button -->
+                        <div class="action-button-container">
+                            <span class="button-tag support-tag">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                                Live
+                            </span>
+                            <button class="action-button support-btn" onclick="openInBrowser('https://telegram.dog/EarningScripter1_bot')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                Customer Support
+                            </button>
+                        </div>
+                        <div class="action-button-container">
+                            <span class="button-tag premium-tag">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                Hot
+                            </span>
+                            <button class="action-button premium-btn" onclick="openInBrowser('https://telegram.dog/+PXaNjq0pqxhiNDc1')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 3v18h15V3H5zm13 15H7V5h11v13z"></path>
+                                    <path d="M12 7v10"></path>
+                                    <path d="M9 10h6"></path>
+                                    <path d="M9 14h6"></path>
+                                </svg>
+                                Try Paid Version
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+// Function to open URL in external browser
+function openInBrowser(url) {
+    window.open(url, '_system');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const refreshBtn = document.getElementById('refreshBtn');
+    const currentTimeElement = document.getElementById('currentTime');
+    const periodOptions = document.querySelectorAll('.period-option');
+    const periodInput = document.getElementById('periodInput');
+    const revealBtn = document.getElementById('revealBtn');
+    const resultDisplay = document.getElementById('resultDisplay');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    
+    // Track only the last used period number
+    let lastUsedPeriod = localStorage.getItem('lastUsedPeriod') || '';
+    
+    // Time update interval
+    let timeUpdateInterval = setInterval(updateCurrentTime, 1000);
+    updateCurrentTime();
+    
+    // Event listeners
+    refreshBtn.addEventListener('click', function() {
+        // Add a quick animation to refresh button
+        refreshBtn.style.transform = 'rotate(360deg)';
+        refreshBtn.style.transition = 'transform 0.5s ease';
+        
+        setTimeout(() => {
+            refreshBtn.style.transform = 'rotate(0deg)';
+        }, 500);
+        
+        // Clear result display and hide it
+        resultDisplay.textContent = '';
+        resultDisplay.style.display = 'none';
+        periodInput.value = '';
+    });
+    
+    // Period option selection
+    periodOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove selected class from all options
+            periodOptions.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            this.classList.add('selected');
+        });
+    });
+    
+    // Reveal button click handler
+    revealBtn.addEventListener('click', function() {
+        if (!periodInput.value) {
+            return; // Do nothing if input is empty
+        }
+        
+        const periodNumber = periodInput.value;
+        
+        // Hide old result when clicking for new result
+        resultDisplay.style.display = 'none';
+        
+        // Check if period number is the last used one
+        if (periodNumber === lastUsedPeriod) {
+            resultDisplay.textContent = "Period already used!";
+            resultDisplay.className = "result-display result-neutral";
+            resultDisplay.style.display = 'flex';
+            return;
+        }
+        
+        // Disable button and show loading
+        revealBtn.disabled = true;
+        loadingIndicator.style.display = 'block';
+        
+        // Simulate processing delay
+        setTimeout(() => {
+            // Randomly select red or green result (weighted slightly toward green for positive UX)
+            const isWin = Math.random() > 0.45;
+            resultDisplay.textContent = isWin ? "GREEN" : "RED";
+            resultDisplay.className = isWin ? "result-display result-green" : "result-display result-red";
+            resultDisplay.style.display = 'flex';
+            
+            // Store only the last used period
+            lastUsedPeriod = periodNumber;
+            localStorage.setItem('lastUsedPeriod', lastUsedPeriod);
+            
+            // Re-enable button and hide loading
+            revealBtn.disabled = false;
+            loadingIndicator.style.display = 'none';
+        }, 2000);
+    });
+    
+    // Enable/disable reveal button based on input
+    periodInput.addEventListener('input', function() {
+        revealBtn.disabled = !this.value;
+        
+        // Check if period is the last used one
+        if (this.value && this.value === lastUsedPeriod) {
+            resultDisplay.textContent = "Period already used!";
+            resultDisplay.className = "result-display result-neutral";
+            resultDisplay.style.display = 'flex';
+        } else if (this.value) {
+            // If it's a different period, show nothing (don't hide existing results)
+            // We don't hide the result display when typing anymore
+        }
+    });
+    
+    // Functions
+    function updateCurrentTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        currentTimeElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    
+    // Initialize
+    updateCurrentTime();
+});
+</script>
+</body>
+</html>
