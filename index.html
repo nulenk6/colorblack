@@ -531,9 +531,46 @@
             animation: pulse 1.5s infinite;
         }
 
+        /* Coming Soon Tag */
+        .coming-soon-tag {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--warning);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            transform: rotate(5deg);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
         /* Game Container Wrapper */
         .game-container-wrapper {
             position: relative;
+        }
+
+        /* Coming Soon Game Styles */
+        .game-container.coming-soon {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .game-container.coming-soon:hover {
+            transform: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.05);
+        }
+
+        .game-container.coming-soon:hover .game-logo {
+            transform: none;
+            border-color: rgba(0, 230, 118, 0.2);
+        }
+
+        .game-container.coming-soon:hover .game-name {
+            color: var(--light);
         }
 
         /* Action buttons section */
@@ -649,7 +686,7 @@
                 max-width: 180px;
             }
 
-            .recommended-tag, .new-tag {
+            .recommended-tag, .new-tag, .coming-soon-tag {
                 font-size: 10px;
                 padding: 2px 8px;
                 top: -8px;
@@ -726,8 +763,8 @@
                     </a>
                 </div>
                 <div class="slide">
-                    <a href="19.html" target="_blank">
-                        <img src="aviator.png" alt="Aviator">
+                    <a href="https://t.me/+wspoa9EM_2xhYTZl" target="_blank">
+                        <img src="paid.png" alt="Aviator">
                     </a>
                 </div>
             </div>
@@ -763,7 +800,7 @@
                 <span class="recommended-tag">RECOMMENDED</span>
                 <div class="game-container" data-href="1.html">
                     <img src="logo1.png" alt="91CLUB" class="game-logo">
-                    <div class="game-name">91CLUB</div>
+                    <div class="game-name">91club</div>
                 </div>
             </div>
             
@@ -779,14 +816,14 @@
                 <span class="recommended-tag">RECOMMENDED</span>
                 <div class="game-container" data-href="3.html">
                     <img src="logo3.png" alt="in999" class="game-logo">
-                    <div class="game-name">in999</div>
+                    <div class="game-name">In999</div>
                 </div>
             </div>
             
             <div class="game-container-wrapper">
                 <span class="recommended-tag">RECOMMENDED</span>
                 <div class="game-container" data-href="4.html">
-                    <img src="logo4.png" alt="Okwin" class="game-logo">
+                    <img src="logo4.png" alt="Daman" class="game-logo">
                     <div class="game-name">Daman</div>
                 </div>
             </div>
@@ -794,124 +831,83 @@
             <div class="game-container-wrapper">
                 <div class="game-container" data-href="5.html">
                     <img src="logo5.png" alt="Tiranga" class="game-logo">
-                    <div class="game-name">Okwin</div>
+                    <div class="game-name">TIRANGA</div>
                 </div>
             </div>
             
             <div class="game-container-wrapper">
                 <div class="game-container" data-href="6.html">
-                    <img src="logo6.png" alt="Daman" class="game-logo">
-                    <div class="game-name">Tiranga</div>
+                    <img src="logo6.png" alt="BigDaddy" class="game-logo">
+                    <div class="game-name">BigDaddy</div>
                 </div>
             </div>
             
             <div class="game-container-wrapper">
                 <div class="game-container" data-href="7.html">
-                    <img src="logo7.png" alt="BigMumbai" class="game-logo">
-                    <div class="game-name">Big Daddy</div>
+                    <img src="logo7.png" alt="BdgWin" class="game-logo">
+                    <div class="game-name">BdgWin</div>
                 </div>
             </div>
             
             <div class="game-container-wrapper">
                 <div class="game-container" data-href="8.html">
-                    <img src="logo8.png" alt="BigDaddy" class="game-logo">
-                    <div class="game-name">Bdgwin</div>
-                </div>
-            </div>
-            
-            <div class="game-container-wrapper">
-                <div class="game-container" data-href="9.html">
-                    <img src="logo9.png" alt="BdgWin" class="game-logo">
-                    <div class="game-name">Big Mumbai</div>
-                </div>
-            </div>
-            
-            <div class="game-container-wrapper">
-                <div class="game-container" data-href="10.html">
-                    <img src="logo10.png" alt="Tashan" class="game-logo">
-                    <div class="game-name">Jalwa Win</div>
-                </div>
-            </div>
-            
-            <div class="game-container-wrapper">
-                <div class="game-container" data-href="11.html">
-                    <img src="logo11.png" alt="DiuWin" class="game-logo">
+                    <img src="logo8.png" alt="DiuWin" class="game-logo">
                     <div class="game-name">DiuWin</div>
                 </div>
             </div>
             
             <div class="game-container-wrapper">
+                <div class="game-container" data-href="9.html">
+                    <img src="logo9.png" alt="BigMumbai" class="game-logo">
+                    <div class="game-name">BigMumbai</div>
+                </div>
+            </div>
+            
+            <div class="game-container-wrapper">
+                <div class="game-container" data-href="10.html">
+                    <img src="logo10.png" alt="Rajalottery" class="game-logo">
+                    <div class="game-name">Rajalottery</div>
+                </div>
+            </div>
+            
+            <div class="game-container-wrapper">
+                <div class="game-container" data-href="11.html">
+                    <img src="logo11.png" alt="Okwin" class="game-logo">
+                    <div class="game-name">Okwin</div>
+                </div>
+            </div>
+            
+            <div class="game-container-wrapper">
                 <div class="game-container" data-href="12.html">
-                    <img src="logo12.png" alt="Jalwa Win" class="game-logo">
-                    <div class="game-name">Tashan Win</div>
+                    <img src="logo12.png" alt="Jalwa" class="game-logo">
+                    <div class="game-name">Jalwa</div>
                 </div>
             </div>
             
+            <!-- Coming Soon Games -->
             <div class="game-container-wrapper">
-                <div class="game-container" data-href="13.html">
-                    <img src="logo13.png" alt="Tc Lottery" class="game-logo">
-                    <div class="game-name">82Lottery</div>
-                </div>
-            </div>
-            
-            <div class="game-container-wrapper">
-                <div class="game-container" data-href="14.html">
-                    <img src="logo14.png" alt="51Club" class="game-logo">
-                    <div class="game-name">51game</div>
-                </div>
-            </div>
-            
-            <div class="game-container-wrapper">
-                <div class="game-container" data-href="15.html">
-                    <img src="logo15.png" alt="82lottery" class="game-logo">
-                    <div class="game-name">Raja Lottery</div>
-                </div>
-            </div>
-            
-            <div class="game-container-wrapper">
-                <div class="game-container" data-href="16.html">
-                    <img src="logo16.png" alt="Goa" class="game-logo">
-                    <div class="game-name">Bdg Slots</div>
-                </div>
-            </div>
-            
-            <div class="game-container-wrapper">
-                <div class="game-container" data-href="17.html">
-                    <img src="logo17.png" alt="Bg678" class="game-logo">
-                    <div class="game-name">Kwg Game</div>
-                </div>
-            </div>
-            
-            <div class="game-container-wrapper">
-                <div class="game-container" data-href="18.html">
-                    <img src="logo18.png" alt="Rajaluck" class="game-logo">
-                    <div class="game-name">Tc Lottery</div>
-                </div>
-            </div>
-            
-            <!-- Newly added games -->
-            <div class="game-container-wrapper">
-                <span class="new-tag">NEW</span>
-                <div class="game-container" data-href="19.html">
+                <span class="coming-soon-tag">COMING SOON</span>
+                <div class="game-container coming-soon">
                     <img src="logo19.png" alt="Aviator" class="game-logo">
                     <div class="game-name">Aviator</div>
                 </div>
             </div>
             
             <div class="game-container-wrapper">
-                <div class="game-container" id="minesGame">
-                    <img src="logo20.png" alt="Mines" class="game-logo">
-                    <div class="game-name">Mines</div>
+                <span class="coming-soon-tag">COMING SOON</span>
+                <div class="game-container coming-soon">
+                    <img src="logo20.png" alt="Chicken Road" class="game-logo">
+                    <div class="game-name">Chicken Road</div>
                 </div>
             </div>
         </div>
         
         <!-- Gift Code Button -->
         <div class="gift-code-btn-container">
-            <span class="gift-code-tag">Free</span>
+            <span class="gift-code-tag">99% Working</span>
             <button class="btn-gift-code" id="giftCodeBtn">
-                <i class="fas fa-gift"></i>
-                CLAIM GIFTCODE
+                <i class="fas fa-fire"></i>
+                Try Paid Hack
             </button>
         </div>
         
@@ -1045,12 +1041,13 @@
         
         // Game container click handlers
         function setupGameContainers() {
-            const gameContainers = document.querySelectorAll('.game-container');
+            const gameContainers = document.querySelectorAll('.game-container:not(.coming-soon)');
+            
             gameContainers.forEach(container => {
                 container.addEventListener('click', () => {
                     const href = container.getAttribute('data-href');
                     if (href) {
-                        window.location.href = href;
+                        window.open(href, '_blank');
                     }
                 });
             });
@@ -1060,7 +1057,7 @@
         function setupButtonHandlers() {
             // WhatsApp button
             document.getElementById('whatsappBtn').addEventListener('click', () => {
-                window.open('https://chat.whatsapp.com/yourlink', '_blank');
+                window.open('https://whatsapp.com/channel/0029Va5l3hC8b9JbrCzrQm1y', '_blank');
             });
             
             // Telegram button
@@ -1068,37 +1065,35 @@
                 window.open('https://t.me/EarningScripter1', '_blank');
             });
             
-            // Winning Proofs button
+            // Winning proofs button
             document.getElementById('winningProofsBtn').addEventListener('click', () => {
-                window.open('https://t.me/EarningScripter1', '_blank');
+                window.open('https://t.me/EarningScripter1/15', '_blank');
             });
             
-            // Gift Code button
+            // Gift code button
             document.getElementById('giftCodeBtn').addEventListener('click', () => {
-                alert('Gift code: FREE100\nUse this code to get ₹100 bonus!');
+                window.open('https://t.me/+wspoa9EM_2xhYTZl', '_blank');
             });
             
-            // Customer Service button
+            // Customer service button
             document.getElementById('customerServiceBtn').addEventListener('click', () => {
                 window.open('https://t.me/EarningScripter1_bot', '_blank');
             });
             
-            // How to Use button
+            // How to use button
             document.getElementById('howToUseBtn').addEventListener('click', () => {
-                alert('How to Use:\n1. Select a game from the list\n2. Follow the instructions on the game page\n3. Use the predictions to increase your winning chances\n4. Join our Telegram for updates and support');
+                window.open('https://t.me/EarningScripter1/16', '_blank');
             });
         }
         
-        // Initialize everything when page loads
+        // Initialize everything when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             createMatrixEffect();
             setupSlider();
-            setupGameContainers();
-            setupButtonHandlers();
-            
-            // Update time every second
             updateCurrentTime();
             setInterval(updateCurrentTime, 1000);
+            setupGameContainers();
+            setupButtonHandlers();
         });
     </script>
 </body>
