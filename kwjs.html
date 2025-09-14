@@ -20,7 +20,6 @@
             
             --register: #673AB7; /* Deep Purple */
             --telegram: #00bcd4; /* Cyan */
-            --premium: #FF9800; /* Orange */
             --support: #e91e63; /* Pink */
         }
         
@@ -443,18 +442,6 @@
             color: white;
         }
         
-        .premium-btn {
-            background: linear-gradient(45deg, var(--premium), #ff8f00);
-            color: white;
-            animation: premiumPulse 2s infinite;
-        }
-        
-        @keyframes premiumPulse {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4); }
-            50% { transform: scale(1.02); box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4); }
-        }
-        
         .support-btn {
             background: linear-gradient(45deg, var(--support), #c2185b);
             color: white;
@@ -474,12 +461,65 @@
         
         .register-tag { background-color: #fdd835; color: #333; }
         .telegram-tag { background-color: #81c784; color: white; }
-        .premium-tag { background-color: #ff8a80; color: white; }
         .support-tag { background-color: #ff80ab; color: white; }
+
+        /* New Ticker Styles */
+        .winner-ticker-container {
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            position: relative;
+            height: 40px;
+            margin-top: 20px;
+            background-color: var(--panel-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .winner-ticker {
+            white-space: nowrap;
+            animation: scroll-left 25s linear infinite;
+            display: inline-block;
+            padding-left: 100%;
+        }
+
+        .winner-message {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-right: 40px;
+            animation: fadeInOut 5s linear;
+        }
+
+        .winner-message strong {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        /* End of New Ticker Styles */
 
         @media (min-width: 768px) {
             .action-buttons {
                 grid-template-columns: 1fr 1fr;
+            }
+            .winner-ticker-container {
+                height: 50px;
+            }
+            .winner-message {
+                font-size: 16px;
             }
         }
     </style>
@@ -582,16 +622,6 @@
                     </div>
                     
                     <div class="action-button-container">
-                        <span class="button-tag premium-tag">Hot</span>
-                        <button class="action-button premium-btn" onclick="openInBrowser('https://telegram.dog/+PXaNjq0pqxhiNDc1')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 3v18h15V3H5zm13 15H7V5h11v13z"></path><path d="M12 7v10"></path><path d="M9 10h6"></path><path d="M9 14h6"></path>
-                            </svg>
-                            Try Paid Version
-                        </button>
-                    </div>
-                    
-                    <div class="action-button-container">
                         <span class="button-tag support-tag">Live</span>
                         <button class="action-button support-btn" onclick="openInBrowser('https://telegram.dog/EarningScripter1_bot')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -603,7 +633,12 @@
                 </div>
             </div>
         </div>
-    </div>
+        
+        <div class="winner-ticker-container">
+            <div class="winner-ticker" id="winnerTicker">
+                </div>
+        </div>
+        </div>
 
 <script>
 // Function to open URL in external browser
@@ -622,6 +657,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const colorResult = document.getElementById('colorResult');
     const sizeResult = document.getElementById('sizeResult');
     const loadingIndicator = document.getElementById('loadingIndicator');
+    const winnerTicker = document.getElementById('winnerTicker');
     
     // Track only the last used period number
     let lastUsedPeriod = localStorage.getItem('lastUsedPeriod') || '';
@@ -716,6 +752,33 @@ document.addEventListener('DOMContentLoaded', function() {
         currentTimeElement.textContent = `${hours}:${minutes}:${seconds}`;
     }
     
+    // New Ticker Functions
+    function getRandomThreeDigits() {
+        return Math.floor(Math.random() * 900) + 100;
+    }
+    
+    function getRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function addNewWinnerMessage() {
+        const winAmount = getRandomNumber(7000, 25000);
+        const userId = "User " + getRandomThreeDigits() + "****" + getRandomThreeDigits();
+        
+        const message = document.createElement('span');
+        message.className = 'winner-message';
+        message.innerHTML = `${userId} Won <strong>₹${winAmount}</strong>`;
+        
+        winnerTicker.appendChild(message);
+    }
+    
+    for (let i = 0; i < 5; i++) {
+        addNewWinnerMessage();
+    }
+    
+    setInterval(addNewWinnerMessage, 5000);
+    // End of New Ticker Functions
+
     updateCurrentTime();
 });
 </script>
