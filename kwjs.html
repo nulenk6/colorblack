@@ -489,7 +489,7 @@
 
         .winner-ticker {
             white-space: nowrap;
-            animation: scroll-left 45s linear infinite; /* Increased duration for slower speed */
+            animation: scroll-left 60s linear infinite; /* Increased duration for slower speed */
             display: inline-block;
             padding-left: 100%;
         }
@@ -518,6 +518,23 @@
             50% { opacity: 1; }
         }
         /* End of New Ticker Styles */
+
+        /* Processing Messages Styles */
+        .processing-message {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-top: 10px;
+            min-height: 20px;
+            animation: fade-in-out 2s infinite;
+        }
+        
+        @keyframes fade-in-out {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        /* End of Processing Messages Styles */
 
         @media (min-width: 768px) {
             .action-buttons {
@@ -599,6 +616,7 @@
                     </div>
                     
                     <div class="futuristic-loading" id="loadingIndicator" style="display: none;"></div>
+                    <div class="processing-message" id="processingMessage"></div>
                 </div>
             </div>
             
@@ -676,6 +694,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const sizeResult = document.getElementById('sizeResult');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const winnerTicker = document.getElementById('winnerTicker');
+    const processingMessageElement = document.getElementById('processingMessage');
+    
+    // Fake processing messages
+    const processingMessages = [
+        "Processing user requests...",
+        "Validating network connection...",
+        "Syncing with live data server...",
+        "Analyzing real-time trend patterns...",
+        "Bypassing prediction engine security...",
+        "Decrypting recent game algorithms...",
+        "Calculating next winning combination...",
+        "Generating final prediction..."
+    ];
+    let messageInterval;
     
     // Track only the last used period number
     let lastUsedPeriod = localStorage.getItem('lastUsedPeriod') || '';
@@ -727,6 +759,15 @@ document.addEventListener('DOMContentLoaded', function() {
         revealBtn.disabled = true;
         loadingIndicator.style.display = 'block';
         
+        // Start showing processing messages
+        let messageIndex = 0;
+        processingMessageElement.textContent = processingMessages[messageIndex];
+        processingMessageElement.style.display = 'block';
+        messageInterval = setInterval(() => {
+            messageIndex = (messageIndex + 1) % processingMessages.length;
+            processingMessageElement.textContent = processingMessages[messageIndex];
+        }, 500); // Change message every 0.5 seconds
+        
         setTimeout(() => {
             const isWin = Math.random() > 0.45;
             const isBig = Math.random() > 0.5;
@@ -743,6 +784,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             revealBtn.disabled = false;
             loadingIndicator.style.display = 'none';
+            
+            clearInterval(messageInterval);
+            processingMessageElement.textContent = '';
+            processingMessageElement.style.display = 'none';
+            
         }, 2000);
     });
     
@@ -772,7 +818,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // New Ticker Functions
     function getRandomThreeDigits() {
-        return Math.floor(Math.random() * 900) + 700;
+        return Math.floor(Math.random() * 900) + 100;
     }
     
     function getRandomNumber(min, max) {
@@ -790,11 +836,11 @@ document.addEventListener('DOMContentLoaded', function() {
         winnerTicker.appendChild(message);
     }
     
-    for (let i = 2; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
         addNewWinnerMessage();
     }
     
-    setInterval(addNewWinnerMessage, 3000);
+    setInterval(addNewWinnerMessage, 5000);
     // End of New Ticker Functions
 
     updateCurrentTime();
