@@ -20,6 +20,7 @@
             
             --register: #673AB7; /* Deep Purple */
             --telegram: #00bcd4; /* Cyan */
+            --gift: #ff6f00; /* Amber Gold */
             --support: #e91e63; /* Pink */
         }
         
@@ -442,6 +443,11 @@
             color: white;
         }
         
+        .gift-btn {
+            background: linear-gradient(45deg, var(--gift), #ffc107);
+            color: white;
+        }
+
         .support-btn {
             background: linear-gradient(45deg, var(--support), #c2185b);
             color: white;
@@ -461,6 +467,7 @@
         
         .register-tag { background-color: #fdd835; color: #333; }
         .telegram-tag { background-color: #81c784; color: white; }
+        .gift-tag { background-color: #fff176; color: #333; }
         .support-tag { background-color: #ff80ab; color: white; }
 
         /* New Ticker Styles */
@@ -470,7 +477,8 @@
             overflow: hidden;
             position: relative;
             height: 40px;
-            margin-top: 20px;
+            margin: 0 auto;
+            margin-bottom: 20px;
             background-color: var(--panel-bg);
             border-radius: 10px;
             border: 1px solid var(--border-color);
@@ -481,7 +489,7 @@
 
         .winner-ticker {
             white-space: nowrap;
-            animation: scroll-left 25s linear infinite;
+            animation: scroll-left 45s linear infinite; /* Increased duration for slower speed */
             display: inline-block;
             padding-left: 100%;
         }
@@ -549,6 +557,10 @@
             </div>
         </div>
 
+        <div class="winner-ticker-container">
+            <div class="winner-ticker" id="winnerTicker">
+                </div>
+        </div>
         <img src="logo1.png" alt="91Club Logo" class="app-logo">
         
         <div class="dashboard">
@@ -620,6 +632,16 @@
                             Join Telegram
                         </button>
                     </div>
+
+                    <div class="action-button-container">
+                        <span class="button-tag gift-tag">New</span>
+                        <button class="action-button gift-btn" onclick="openInBrowser('https://telegram.dog/EarningScripter1_bot')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="8" width="18" height="12" rx="2" ry="2"></rect><path d="M12 8V4"></path><path d="M7 8V4"></path><path d="M17 8V4"></path><path d="M3 15h18"></path><path d="M8 12h8"></path>
+                            </svg>
+                            Free Gift Codes
+                        </button>
+                    </div>
                     
                     <div class="action-button-container">
                         <span class="button-tag support-tag">Live</span>
@@ -633,12 +655,8 @@
                 </div>
             </div>
         </div>
-        
-        <div class="winner-ticker-container">
-            <div class="winner-ticker" id="winnerTicker">
-                </div>
-        </div>
-        </div>
+
+    </div>
 
 <script>
 // Function to open URL in external browser
