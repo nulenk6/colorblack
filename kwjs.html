@@ -453,9 +453,10 @@
             background: linear-gradient(45deg, var(--support), #c2185b);
             color: white;
         }
-        
+
+        /* Adjusted button container for spacing */
         .proof-btn-container {
-            margin-top: 25px;
+            padding: 20px 0;
             text-align: center;
         }
         
@@ -697,7 +698,7 @@
                     </div>
                     
                     <div class="futuristic-loading" id="loadingIndicator" style="display: none;"></div>
-                    <div class="processing-message" id="processingMessage"></div>
+                    <div class="processing-message" id="processingMessage" style="display: none;"></div>
                 </div>
             </div>
             
@@ -848,8 +849,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Initial scroll after 5 seconds
-    setTimeout(autoScroll, 5000);
+    // Initial scroll after 3 seconds
+    setTimeout(autoScroll, 3000);
 
     // Subsequent scrolls every 2 minutes (120000 milliseconds)
     setInterval(autoScroll, 120000);
