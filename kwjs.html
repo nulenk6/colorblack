@@ -457,6 +457,8 @@
         .proof-btn {
             background: linear-gradient(45deg, var(--proof), #34495e);
             color: white;
+            width: 60%; /* Smaller width */
+            margin: 0 auto; /* Center the button */
         }
 
         .button-tag {
@@ -496,7 +498,7 @@
 
         .winner-ticker {
             white-space: nowrap;
-            animation: scroll-left 45s linear infinite; /* Increased duration for slower speed */
+            animation: scroll-left 45s linear infinite;
             display: inline-block;
             padding-left: 100%;
         }
@@ -543,11 +545,73 @@
         }
         /* End of Processing Messages Styles */
 
-        /* To make the user scroll down */
-        .spacer {
-            height: 300px; /* Adjust this value to control how much space is added */
+        /* Dialog Box Styles */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .dialog-box {
+            background-color: var(--panel-bg);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.4s ease-out;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .dialog-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .dialog-close:hover {
+            color: var(--text-dark);
+        }
+
+        .dialog-message {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+        }
+
+        .dialog-register-btn {
+            background-color: var(--register);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background-color 0.3s;
         }
         
+        .dialog-register-btn:hover {
+            background-color: #512da8;
+        }
+
         @media (min-width: 768px) {
             .action-buttons {
                 grid-template-columns: 1fr 1fr;
@@ -641,8 +705,6 @@
                     For best results, please create a new account by clicking on the 'Register' button. Using this hack on your old account may not work properly.<br>
                     अच्छे मुनाफ़े और परिणाम के लिए 'Register' बटन पर क्लिक करके नया अकाउंट बनाएं। पुराने अकाउंट में इस हैक का उपयोग करने पर यह सही से काम नहीं करेगा।"
                 </div>
-                
-                <div class="spacer"></div>
 
                 <div class="action-buttons">
                     <div class="action-button-container">
@@ -684,26 +746,43 @@
                             Customer Support
                         </button>
                     </div>
+                </div>
 
-                    <div class="action-button-container">
-                        <span class="button-tag proof-tag">New</span>
-                        <button class="action-button proof-btn" onclick="openInBrowser('https://telegram.dog/EarningScripter1_bot')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 11h.01"></path><path d="M15 11h.01"></path><path d="M9 11h.01"></path><path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                            Winning Proofs
-                        </button>
-                    </div>
+                <div class="action-button-container">
+                    <span class="button-tag proof-tag">New</span>
+                    <button class="action-button proof-btn" onclick="openInBrowser('https://telegram.dog/EarningScripter1_bot')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 11h.01"></path><path d="M15 11h.01"></path><path d="M9 11h.01"></path><path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        Winning Proofs
+                    </button>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <div class="dialog-overlay" id="dialogOverlay">
+        <div class="dialog-box">
+            <span class="dialog-close" id="dialogClose">&times;</span>
+            <div class="dialog-message">
+                For best performance and results, register a new account by clicking on the button below.
+            </div>
+            <a href="https://colorsignup.github.io/ES1/91club" class="dialog-register-btn" onclick="closeDialog()">
+                Register Now
+            </a>
+        </div>
+    </div>
+
 <script>
 // Function to open URL in external browser
 function openInBrowser(url) {
     window.open(url, '_blank');
+}
+
+// Function to close the dialog box
+function closeDialog() {
+    document.getElementById('dialogOverlay').style.display = 'none';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -720,6 +799,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const winnerTicker = document.getElementById('winnerTicker');
     const processingMessageElement = document.getElementById('processingMessage');
     
+    // Dialog Box Elements
+    const dialogOverlay = document.getElementById('dialogOverlay');
+    const dialogCloseBtn = document.getElementById('dialogClose');
+
+    // Show dialog on page load
+    dialogOverlay.style.display = 'flex';
+    
+    // Close dialog when close button or overlay is clicked
+    dialogCloseBtn.addEventListener('click', closeDialog);
+    dialogOverlay.addEventListener('click', function(e) {
+        if (e.target.id === 'dialogOverlay') {
+            closeDialog();
+        }
+    });
+
     // Fake processing messages
     const processingMessages = [
         "Processing user requests...",
@@ -842,7 +936,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // New Ticker Functions
     function getRandomThreeDigits() {
-        // Generates a random number between 700 and 900
         return Math.floor(Math.random() * (900 - 700 + 1)) + 700;
     }
     
