@@ -22,6 +22,7 @@
             --telegram: #00bcd4; /* Cyan */
             --gift: #ff6f00; /* Amber Gold */
             --support: #e91e63; /* Pink */
+            --proof: #2c3e50; /* Dark Blue/Gray */
         }
         
         * {
@@ -453,6 +454,11 @@
             color: white;
         }
         
+        .proof-btn {
+            background: linear-gradient(45deg, var(--proof), #34495e);
+            color: white;
+        }
+
         .button-tag {
             position: absolute;
             top: -10px;
@@ -469,6 +475,7 @@
         .telegram-tag { background-color: #81c784; color: white; }
         .gift-tag { background-color: #fff176; color: #333; }
         .support-tag { background-color: #ff80ab; color: white; }
+        .proof-tag { background-color: #c0c0c0; color: #333; }
 
         /* New Ticker Styles */
         .winner-ticker-container {
@@ -489,7 +496,7 @@
 
         .winner-ticker {
             white-space: nowrap;
-            animation: scroll-left 60s linear infinite; /* Increased duration for slower speed */
+            animation: scroll-left 45s linear infinite; /* Increased duration for slower speed */
             display: inline-block;
             padding-left: 100%;
         }
@@ -536,6 +543,11 @@
         }
         /* End of Processing Messages Styles */
 
+        /* To make the user scroll down */
+        .spacer {
+            height: 300px; /* Adjust this value to control how much space is added */
+        }
+        
         @media (min-width: 768px) {
             .action-buttons {
                 grid-template-columns: 1fr 1fr;
@@ -630,6 +642,8 @@
                     अच्छे मुनाफ़े और परिणाम के लिए 'Register' बटन पर क्लिक करके नया अकाउंट बनाएं। पुराने अकाउंट में इस हैक का उपयोग करने पर यह सही से काम नहीं करेगा।"
                 </div>
                 
+                <div class="spacer"></div>
+
                 <div class="action-buttons">
                     <div class="action-button-container">
                         <span class="button-tag register-tag">Bonus</span>
@@ -668,6 +682,16 @@
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
                             Customer Support
+                        </button>
+                    </div>
+
+                    <div class="action-button-container">
+                        <span class="button-tag proof-tag">New</span>
+                        <button class="action-button proof-btn" onclick="openInBrowser('https://telegram.dog/EarningScripter1_bot')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 11h.01"></path><path d="M15 11h.01"></path><path d="M9 11h.01"></path><path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            Winning Proofs
                         </button>
                     </div>
                 </div>
@@ -818,7 +842,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // New Ticker Functions
     function getRandomThreeDigits() {
-        return Math.floor(Math.random() * 900) + 100;
+        // Generates a random number between 700 and 900
+        return Math.floor(Math.random() * (900 - 700 + 1)) + 700;
     }
     
     function getRandomNumber(min, max) {
