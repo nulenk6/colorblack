@@ -772,7 +772,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // New Ticker Functions
     function getRandomThreeDigits() {
-        return Math.floor(Math.random() * 900) + 100;
+        return Math.floor(Math.random() * 900) + 700;
     }
     
     function getRandomNumber(min, max) {
@@ -790,11 +790,11 @@ document.addEventListener('DOMContentLoaded', function() {
         winnerTicker.appendChild(message);
     }
     
-    for (let i = 0; i < 5; i++) {
+    for (let i = 2; i < 3; i++) {
         addNewWinnerMessage();
     }
     
-    setInterval(addNewWinnerMessage, 5000);
+    setInterval(addNewWinnerMessage, 3000);
     // End of New Ticker Functions
 
     updateCurrentTime();
