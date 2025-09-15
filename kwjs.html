@@ -110,7 +110,24 @@
             color: var(--text-dark);
             font-weight: 600;
         }
-        
+
+        .guide-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: #555;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
         .app-logo {
             max-width: 120px;
             height: auto;
@@ -453,20 +470,7 @@
             background: linear-gradient(45deg, var(--support), #c2185b);
             color: white;
         }
-
-        /* Adjusted button container for spacing */
-        .proof-btn-container {
-            padding: 20px 0;
-            text-align: center;
-        }
         
-        .proof-btn {
-            background: linear-gradient(45deg, var(--proof), #34495e);
-            color: white;
-            width: 60%;
-            margin: 0 auto;
-        }
-
         .button-tag {
             position: absolute;
             top: -10px;
@@ -483,7 +487,6 @@
         .telegram-tag { background-color: #81c784; color: white; }
         .gift-tag { background-color: #fff176; color: #333; }
         .support-tag { background-color: #ff80ab; color: white; }
-        .proof-tag { background-color: #c0c0c0; color: #333; }
 
         /* New Ticker Styles */
         .winner-ticker-container {
@@ -563,6 +566,12 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            animation: fadeInDialog 0.3s ease;
+        }
+        
+        @keyframes fadeInDialog {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .dialog-box {
@@ -575,6 +584,8 @@
             position: relative;
             animation: slideIn 0.4s ease-out;
             box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         @keyframes slideIn {
@@ -603,7 +614,7 @@
             margin-bottom: 25px;
         }
 
-        .dialog-register-btn {
+        .dialog-register-btn, .guide-btn-action {
             background-color: var(--register);
             color: white;
             padding: 12px 25px;
@@ -612,10 +623,46 @@
             font-weight: 600;
             display: inline-block;
             transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
         }
         
-        .dialog-register-btn:hover {
+        .dialog-register-btn:hover, .guide-btn-action:hover {
             background-color: #512da8;
+        }
+
+        .guide-step {
+            display: none;
+        }
+
+        .guide-step.active {
+            display: block;
+        }
+
+        .guide-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .guide-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .guide-text {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .guide-navigation {
+            display: flex;
+            justify-content: flex-end;
         }
 
         @media (min-width: 768px) {
@@ -639,6 +686,14 @@
                     <img src="logo1.png" alt="Logo" style="width: 30px; height: 30px;">
                     91Club Predictor
                 </div>
+                <button class="guide-btn" id="guideBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    Guide
+                </button>
             </div>
             <div class="status-bar">
                 <div class="status-items">
@@ -753,18 +808,6 @@
                         </button>
                     </div>
                 </div>
-
-                <div class="proof-btn-container">
-                    <div class="action-button-container">
-                        <span class="button-tag proof-tag">New</span>
-                        <button class="action-button proof-btn" onclick="openInBrowser('https://telegram.dog/EarningScripter1_bot')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 11h.01"></path><path d="M15 11h.01"></path><path d="M9 11h.01"></path><path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                            Winning Proofs
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -775,9 +818,71 @@
             <div class="dialog-message">
                 For best performance and results, register a new account by clicking on the button below.
             </div>
-            <a href="https://colorsignup.github.io/ES1/91club" class="dialog-register-btn" onclick="closeDialog()">
+            <a href="https://colorsignup.github.io/ES1/91club" class="dialog-register-btn" onclick="closeDialog('dialogOverlay')">
                 Register Now
             </a>
+        </div>
+    </div>
+
+    <div class="dialog-overlay" id="guideOverlay" style="display: none;">
+        <div class="dialog-box">
+            <span class="dialog-close" id="guideClose">&times;</span>
+            
+            <div class="guide-step active" id="step1">
+                <div class="guide-title">STEP 1</div>
+                <img src="https://i.ibb.co/68v8z9k/2024-06-11-20-43-34.png" alt="Step 1 Image" class="guide-image">
+                <div class="guide-text">
+                    Log in to your 91Club account and go to the WinGo page. Make sure to open this prediction page on a separate screen or split-screen.
+                </div>
+                <div class="guide-navigation">
+                    <button class="guide-btn-action" onclick="nextStep(2)">Next</button>
+                </div>
+            </div>
+
+            <div class="guide-step" id="step2">
+                <div class="guide-title">STEP 2</div>
+                <img src="https://i.ibb.co/g42c262/2024-06-11-20-43-46.png" alt="Step 2 Image" class="guide-image">
+                <div class="guide-text">
+                    Match the period number on this page with the one in the 91Club app.
+                </div>
+                <div class="guide-navigation">
+                    <button class="guide-btn-action" onclick="nextStep(3)">Next</button>
+                </div>
+            </div>
+
+            <div class="guide-step" id="step3">
+                <div class="guide-title">STEP 3</div>
+                <img src="https://i.ibb.co/308c66T/2024-06-11-20-43-55.png" alt="Step 3 Image" class="guide-image">
+                <div class="guide-text">
+                    Enter the last 3 digits of the period number into the input box and click **"START PREDICTION"**.
+                </div>
+                <div class="guide-navigation">
+                    <button class="guide-btn-action" onclick="nextStep(4)">Next</button>
+                </div>
+            </div>
+
+            <div class="guide-step" id="step4">
+                <div class="guide-title">STEP 4</div>
+                <img src="https://i.ibb.co/Wc2Fj7z/2024-06-11-20-44-01.png" alt="Step 4 Image" class="guide-image">
+                <div class="guide-text">
+                    The prediction will appear. Now, go back to the 91Club app.
+                </div>
+                <div class="guide-navigation">
+                    <button class="guide-btn-action" onclick="nextStep(5)">Next</button>
+                </div>
+            </div>
+            
+            <div class="guide-step" id="step5">
+                <div class="guide-title">STEP 5</div>
+                <img src="https://i.ibb.co/3S457qg/2024-06-11-20-44-07.png" alt="Step 5 Image" class="guide-image">
+                <div class="guide-text">
+                    Bet on the predicted color and size. Enjoy your earnings!
+                </div>
+                <div class="guide-navigation">
+                    <button class="guide-btn-action" onclick="closeDialog('guideOverlay')">OK</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -787,9 +892,9 @@ function openInBrowser(url) {
     window.open(url, '_blank');
 }
 
-// Function to close the dialog box
-function closeDialog() {
-    document.getElementById('dialogOverlay').style.display = 'none';
+// Function to close any dialog box
+function closeDialog(id) {
+    document.getElementById(id).style.display = 'none';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -805,21 +910,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadingIndicator = document.getElementById('loadingIndicator');
     const winnerTicker = document.getElementById('winnerTicker');
     const processingMessageElement = document.getElementById('processingMessage');
+    const guideBtn = document.getElementById('guideBtn');
     
     // Dialog Box Elements
-    const dialogOverlay = document.getElementById('dialogOverlay');
-    const dialogCloseBtn = document.getElementById('dialogClose');
+    const mainDialogOverlay = document.getElementById('dialogOverlay');
+    const mainDialogCloseBtn = document.getElementById('dialogClose');
 
-    // Show dialog on page load
-    dialogOverlay.style.display = 'flex';
+    const guideOverlay = document.getElementById('guideOverlay');
+    const guideCloseBtn = document.getElementById('guideClose');
+    
+    // State for guide steps
+    let currentStep = 1;
+
+    // Show main dialog on page load
+    mainDialogOverlay.style.display = 'flex';
     
     // Close dialog when close button or overlay is clicked
-    dialogCloseBtn.addEventListener('click', closeDialog);
-    dialogOverlay.addEventListener('click', function(e) {
+    mainDialogCloseBtn.addEventListener('click', () => closeDialog('dialogOverlay'));
+    mainDialogOverlay.addEventListener('click', function(e) {
         if (e.target.id === 'dialogOverlay') {
-            closeDialog();
+            closeDialog('dialogOverlay');
         }
     });
+
+    // Guide button functionality
+    guideBtn.addEventListener('click', () => {
+        showGuide();
+    });
+
+    guideCloseBtn.addEventListener('click', () => closeDialog('guideOverlay'));
+    guideOverlay.addEventListener('click', function(e) {
+        if (e.target.id === 'guideOverlay') {
+            closeDialog('guideOverlay');
+        }
+    });
+
+    window.nextStep = (step) => {
+        document.getElementById('step' + currentStep).classList.remove('active');
+        currentStep = step;
+        document.getElementById('step' + currentStep).classList.add('active');
+    };
+
+    function showGuide() {
+        currentStep = 1;
+        document.querySelectorAll('.guide-step').forEach(step => step.classList.remove('active'));
+        document.getElementById('step1').classList.add('active');
+        guideOverlay.style.display = 'flex';
+    }
 
     // Fake processing messages
     const processingMessages = [
@@ -844,7 +981,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Automatic scrolling
     function autoScroll() {
         window.scrollBy({
-            top: 250, // Scroll down by 250px
+            top: 300, 
             behavior: 'smooth'
         });
     }
