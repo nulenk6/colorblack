@@ -654,6 +654,84 @@
             transform: translateY(-2px);
         }
 
+        /* Updated Telegram Button */
+        .telegram-btn-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .telegram-tag {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--success);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            transform: rotate(5deg);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 2;
+            animation: pulse 1.5s infinite;
+        }
+
+        .btn-telegram {
+            background: linear-gradient(135deg, var(--telegram) 0%, #0064b7 100%);
+            padding: 15px 25px;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-telegram:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 136, 204, 0.4);
+        }
+
+        .btn-telegram i {
+            font-size: 1.2rem;
+        }
+
+        /* Latest Version Banner */
+        .latest-version-banner {
+            background: linear-gradient(90deg, transparent, rgba(0, 230, 118, 0.2), transparent);
+            padding: 8px 0;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+            border-top: 1px solid rgba(0, 230, 118, 0.3);
+            border-bottom: 1px solid rgba(0, 230, 118, 0.3);
+        }
+
+        .latest-version-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--primary);
+            white-space: nowrap;
+            animation: scrollText 15s linear infinite;
+            display: inline-block;
+            padding-left: 100%;
+        }
+
+        @keyframes scrollText {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .game-grid {
@@ -695,6 +773,16 @@
             
             .action-buttons {
                 grid-template-columns: 1fr;
+            }
+
+            .btn-telegram {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                max-width: 280px;
+            }
+
+            .latest-version-text {
+                font-size: 12px;
             }
         }
 
@@ -782,15 +870,21 @@
         <div class="header">
             <p class="subtitle">>_ Free available for all</p>
             
+            <!-- Latest Version Banner -->
+            <div class="latest-version-banner">
+                <div class="latest-version-text">
+                    ⚡ 2025 LATEST UPDATED APP ⚡ 2025 LATEST UPDATED APP ⚡ 2025 LATEST UPDATED APP ⚡ 2025 LATEST UPDATED APP ⚡
+                </div>
+            </div>
+            
             <div class="button-row">
-                <button class="btn btn-primary" id="telegramBtn">
-                    <img src="https://icons.veryicon.com/png/o/object/material_design_icons/telegram-2.png" alt="Telegram" style="width:16px;height:16px;">
-                    JOIN TELEGRAM
-                </button>
-                <button class="btn btn-success" id="winningProofsBtn">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1042/1042339.png" alt="Proof" style="width:16px;height:16px;">
-                    WINNING PROOFS
-                </button>
+                <div class="telegram-btn-container">
+                    <span class="telegram-tag">FREE</span>
+                    <button class="btn-telegram" id="telegramBtn">
+                        <i class="fab fa-telegram"></i>
+                        JOIN TELEGRAM
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -1063,11 +1157,6 @@
             // Telegram button
             document.getElementById('telegramBtn').addEventListener('click', () => {
                 window.open('https://t.me/EarningScripter1', '_blank');
-            });
-            
-            // Winning proofs button
-            document.getElementById('winningProofsBtn').addEventListener('click', () => {
-                window.open('https://t.me/EarningScripter1/15', '_blank');
             });
             
             // Gift code button
