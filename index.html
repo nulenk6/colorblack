@@ -732,186 +732,6 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* NEW: Hack Dialog Styles */
-        .hack-dialog-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .hack-dialog-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .hack-dialog {
-            background: linear-gradient(135deg, rgba(18, 18, 18, 0.95), rgba(10, 10, 10, 0.95));
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            padding: 30px;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0, 230, 118, 0.3);
-            border: 1px solid rgba(0, 230, 118, 0.2);
-            transform: scale(0.9);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .hack-dialog.active {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .hack-dialog-header {
-            text-align: center;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .hack-dialog-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            color: var(--primary);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
-        }
-
-        .hack-dialog-subtitle {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 14px;
-            color: var(--light);
-            opacity: 0.8;
-            margin-bottom: 15px;
-        }
-
-        .hack-dialog-icon {
-            font-size: 50px;
-            color: var(--primary);
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(0, 230, 118, 0.7);
-            animation: iconPulse 2s infinite;
-        }
-
-        @keyframes iconPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .hack-dialog-content {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .hack-dialog-text {
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--light);
-            margin-bottom: 15px;
-        }
-
-        .hack-dialog-features {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .hack-feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            color: var(--light);
-        }
-
-        .hack-feature i {
-            color: var(--success);
-            font-size: 16px;
-        }
-
-        .hack-dialog-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn-hack-dialog {
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .btn-hack-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, #00a85a 100%);
-            color: white;
-            box-shadow: 0 5px 15px rgba(0, 230, 118, 0.4);
-        }
-
-        .btn-hack-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.6);
-        }
-
-        .btn-hack-secondary {
-            background: linear-gradient(135deg, var(--secondary) 0%, #1a67f2 100%);
-            color: white;
-            box-shadow: 0 5px 15px rgba(41, 121, 255, 0.4);
-        }
-
-        .btn-hack-secondary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(41, 121, 255, 0.6);
-        }
-
-        .btn-hack-close {
-            background: transparent;
-            color: var(--light);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-hack-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .hack-dialog-tag {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: var(--accent);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            transform: rotate(5deg);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            z-index: 2;
-            animation: pulse 1.5s infinite;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .game-grid {
@@ -964,19 +784,6 @@
             .latest-version-text {
                 font-size: 12px;
             }
-
-            .hack-dialog {
-                padding: 20px;
-                width: 95%;
-            }
-
-            .hack-dialog-title {
-                font-size: 20px;
-            }
-
-            .hack-dialog-icon {
-                font-size: 40px;
-            }
         }
 
         /* Button Animation */
@@ -1005,51 +812,6 @@
     </style>
 </head>
 <body>
-    <!-- NEW: Hack Dialog -->
-    <div class="hack-dialog-overlay active" id="hackDialogOverlay">
-        <div class="hack-dialog active" id="hackDialog">
-            <span class="hack-dialog-tag">NEW</span>
-            <div class="hack-dialog-header">
-                <div class="hack-dialog-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <h2 class="hack-dialog-title">NEW HACK AVAILABLE</h2>
-                <p class="hack-dialog-subtitle">2025 LATEST UPDATE</p>
-            </div>
-            <div class="hack-dialog-content">
-                <p class="hack-dialog-text">Unlock premium features and increase your winning chances with our latest hack!</p>
-                <div class="hack-dialog-features">
-                    <div class="hack-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Increased Winning Rate</span>
-                    </div>
-                    <div class="hack-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Premium Predictions</span>
-                    </div>
-                    <div class="hack-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>No Detection Guarantee</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hack-dialog-buttons">
-                <button class="btn-hack-dialog btn-hack-primary" id="hackDownloadBtn">
-                    <i class="fab fa-telegram"></i>
-                    JOIN TELEGRAM TO DOWNLOAD
-                </button>
-                <button class="btn-hack-dialog btn-hack-secondary" id="hackWhatsAppBtn">
-                    <i class="fab fa-whatsapp"></i>
-                    GET ON WHATSAPP
-                </button>
-                <button class="btn-hack-dialog btn-hack-close" id="hackCloseBtn">
-                    <i class="fas fa-times"></i>
-                    CLOSE
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Matrix Effect -->
     <div class="matrix-effect" id="matrixEffect"></div>
     <div class="scanlines"></div>
@@ -1211,8 +973,8 @@
             
             <div class="game-container-wrapper">
                 <div class="game-container" data-href="12.html">
-                    <img src="logo12.png" alt="Jalwa" class="game-logo">
-                    <div class="game-name">Jalwa</div>
+                    <img src="51.png" alt="51game" class="game-logo">
+                    <div class="game-name">51game</div>
                 </div>
             </div>
             
@@ -1260,54 +1022,6 @@
     <div class="terminal-line">>_ SYSTEM_READY_FOR_PREDICTION</div>
 
     <script>
-        // NEW: Hack Dialog Functionality
-        function setupHackDialog() {
-            const hackDialogOverlay = document.getElementById('hackDialogOverlay');
-            const hackDialog = document.getElementById('hackDialog');
-            const hackDownloadBtn = document.getElementById('hackDownloadBtn');
-            const hackWhatsAppBtn = document.getElementById('hackWhatsAppBtn');
-            const hackCloseBtn = document.getElementById('hackCloseBtn');
-            
-            // Show dialog on page load
-            setTimeout(() => {
-                hackDialogOverlay.classList.add('active');
-                hackDialog.classList.add('active');
-            }, 1000);
-            
-            // Close dialog
-            function closeDialog() {
-                hackDialogOverlay.classList.remove('active');
-                hackDialog.classList.remove('active');
-                
-                // Remove from DOM after animation
-                setTimeout(() => {
-                    hackDialogOverlay.style.display = 'none';
-                }, 300);
-            }
-            
-            // Event listeners for dialog buttons
-            hackDownloadBtn.addEventListener('click', () => {
-                // Open in external browser
-                window.open('https://t.me/EarningScripter1', '_system');
-                closeDialog();
-            });
-            
-            hackWhatsAppBtn.addEventListener('click', () => {
-                // Open in external browser
-                window.open('https://colorsignup.github.io/ES1/WhatsApp.html', '_system');
-                closeDialog();
-            });
-            
-            hackCloseBtn.addEventListener('click', closeDialog);
-            
-            // Close dialog when clicking outside
-            hackDialogOverlay.addEventListener('click', (e) => {
-                if (e.target === hackDialogOverlay) {
-                    closeDialog();
-                }
-            });
-        }
-
         // Create matrix effect
         function createMatrixEffect() {
             const chars = "01";
@@ -1469,7 +1183,6 @@
         
         // Initialize everything when the page loads
         document.addEventListener('DOMContentLoaded', () => {
-            setupHackDialog();
             createMatrixEffect();
             setupSlider();
             updateCurrentTime();
